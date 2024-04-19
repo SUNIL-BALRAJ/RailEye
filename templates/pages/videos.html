@@ -1,0 +1,77 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+{% block title %} VideoDetail {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- Link to Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Specific Page CSS -->
+  <style>
+    /* Your CSS code here */
+    .container {
+      margin-top: 20px;
+    }
+
+    .column {
+      float: left;
+      width: 33.33%;
+      padding: 0 15px;
+      box-sizing: border-box;
+    }
+
+    /* Clear floats after every third column */
+    .row::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    video {
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    video:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Your content -->
+  <div class="container" id='mainDiv'>
+    <div class="col-md-12">
+      {% for video in videos %}
+        {% if forloop.counter0|divisibleby:3 %}
+            <div class="row">
+        {% endif %}
+        <div class="column">
+            <a href="{% url 'suspects' video.id %}">
+                <video name="video_content" width="100%" height="150" autoplay loop muted>
+                    <source src="{{ video.video.url }}" type="video/mp4">
+                </video>
+            </a>
+        </div>
+        {% if forloop.counter|divisibleby:3 or forloop.last %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+  </div>
+
+  <!-- Link to Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock content %}
